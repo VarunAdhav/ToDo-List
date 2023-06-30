@@ -3,7 +3,16 @@ const bodyparser = require("body-parser")
 
 const app = express()
 app.set("view engine" , "ejs")
+app.use(bodyparser.urlencoded({extended:true}))
 
+var items = []
+
+app.post("/" , (req , res)=>{
+        var newItem = req.body.task
+
+        items.push(newItem)
+        res.redirect("/")
+})
 
 app.get("/" , (req , res)=>{
 
@@ -34,8 +43,11 @@ app.get("/" , (req , res)=>{
     }
     console.log("Day is "+ day);
     console.log("you have landed on the home page.")
-    res.render("list" , {kindOfDay:  kindOfDay , day: day})
+    res.render("list" , {day: day , items:items})
     
+
+
+
 })
 
 app.listen(3000 , ()=>{
