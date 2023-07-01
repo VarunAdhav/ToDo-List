@@ -1,25 +1,26 @@
-const express = require("express")
-const bodyparser = require("body-parser")
+const express = require("express");
+const bodyparser = require("body-parser");
 
-const app = express()
-app.set("view engine" , "ejs")
-app.use(bodyparser.urlencoded({extended:true}))
+const app = express();
+app.set("view engine" , "ejs");
+app.use(bodyparser.urlencoded({extended:true}));
+app.use(express.static("public"));
 
-var items = []
-
+var items = [" "];
+ 
 app.post("/" , (req , res)=>{
-        var newItem = req.body.task
+        var newItem = req.body.task;
 
-        items.push(newItem)
-        res.redirect("/")
-})
+        items.push(newItem);
+        res.redirect("/");
+});
 
 app.get("/" , (req , res)=>{
 
-    const today = new Date()
-    var kindOfDay = ""
-    var Day = today.getDay()
-    var day = ""
+    const today = new Date();
+    var kindOfDay = "";
+    var Day = today.getDay();
+    var day = "";
     switch(Day){
         case 1: day = "Monday";
                 break;
@@ -39,17 +40,15 @@ app.get("/" , (req , res)=>{
     if(today.getDay() === 6 ||today.getDay() === 0){
         kindOfDay = "Week End 😁";
     }else{
-        kindOfDay = "Week Day🥲"
+        kindOfDay = "Week Day🥲";
     }
     console.log("Day is "+ day);
-    console.log("you have landed on the home page.")
-    res.render("list" , {day: day , items:items})
-    
+    console.log("you have landed on the home page.");
+    console.log(items);
+    res.render("list" , {day: day , items:items});
 
-
-
-})
+});
 
 app.listen(3000 , ()=>{
-    console.log("App is currently listening in port 3000....")
-}) 
+    console.log("App is currently listening in port 3000....");
+}) ;
