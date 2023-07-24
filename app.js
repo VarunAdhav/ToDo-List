@@ -1,13 +1,16 @@
 const express = require("express");
 const bodyparser = require("body-parser");
+const mongoose = require("mongoose")
 
 const app = express();
 app.set("view engine" , "ejs");
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
-var items = [" "];
- 
+const items = ["Hello"];
+
+
+
 app.post("/" , (req , res)=>{
         var newItem = req.body.task;
 

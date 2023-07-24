@@ -14,15 +14,15 @@
                 <p>
                     <%= items[i] %>
                 </p>
-                <% } %>
-                </div>
-                <form class="item" action="/" method="post">
-                    <input type="text" name="task" placeholder="New Task" autocomplete="off">
-                    <button type="submit">+</button>
-                </form>
             </div>
+            <% } %>
+            <form class="item" action="/" method="post">
+                <input type="text" name="task" placeholder="New Task" autocomplete="off">
+                <button type="submit">+</button>
+            </form>
+        </div>
         </body>
         <br>
         <%- include("footer") %>
         
-            </html>
+    </html>

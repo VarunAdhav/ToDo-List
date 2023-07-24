@@ -1,6 +1,5 @@
-html {
-    background-color: #E4E9FD;
-    background-image: ;
+body {
+    background-color: #d0c2e7;
     min-height: 1000px;
     font-family: 'helvetica neue';
 }
@@ -27,8 +26,8 @@ h1 {
 .item {
     min-height: 70px;
     display: flex;
-    flex-wrap: inherit;
     align-items: center;
+    border-bottom: 1px solid #f1f1f1;
 }
 
 .item:last-child {
@@ -37,7 +36,7 @@ h1 {
 }
 
 input:checked+p {
-    text-decoration: line-through;
+    text-decoration: 5px line-through;
     text-decoration-color: #A683E3;
 }
 
@@ -92,7 +91,7 @@ input[type="text"]:focus {
 }
 
 footer {
-    color: white;
+    
     color: rgba(0, 0, 0, 0.5);
     text-align: center;
 }
