@@ -7,18 +7,35 @@ app.set("view engine" , "ejs");
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
-const items = ["Hello"];
 
 
+mongoose.connect("mongodb://127.0.0.1:27017/todoListDB").then(()=>{
+        console.log("Connected to MongoDB");
+})
 
-app.post("/" , (req , res)=>{
-        var newItem = req.body.task;
-
-        items.push(newItem);
-        res.redirect("/");
+const taskSchema = new mongoose.Schema({
+        task: {
+                type: String,
+                required: [1 , "Some task will be there..."]
+        }
 });
 
-app.get("/" , (req , res)=>{
+let task = new mongoose.model("tasks" , taskSchema , "tasks");
+
+
+
+let items = [];
+async function itemPush(){
+        items = [];
+        let cur = await task.find();
+        cur.forEach((task)=>{
+                items.push(task.task);
+                console.log(task.task);
+        });
+        // console.log(items);
+}
+
+function getDay(){
 
     const today = new Date();
     var kindOfDay = "";
@@ -40,18 +57,50 @@ app.get("/" , (req , res)=>{
         case 0: day = "Sunday";
                 break;
     };
-    if(today.getDay() === 6 ||today.getDay() === 0){
-        kindOfDay = "Week End 😁";
-    }else{
-        kindOfDay = "Week Day🥲";
-    }
-    console.log("Day is "+ day);
-    console.log("you have landed on the home page.");
-    console.log(items);
-    res.render("list" , {day: day , items:items});
+    return day;
+}
 
+app.post("/add" , (req , res)=>{
+        const newItem = req.body.task;
+        
+        const newTask = new task({
+                task : newItem
+        })
+        newTask.save();
+        console.log("List has: "+items);
+        res.status(200).redirect("/")
+        // res.render("list" , {day: getDay() , items:items});
+});
+
+app.get("/" , (req , res)=>{
+        res.redirect("/home");
+});
+
+app.get("/home" , async(req , res)=>{
+    
+//     if(today.getDay() === 6 ||today.getDay() === 0){
+//         kindOfDay = "Week End 😁";
+//     }else{
+//         kindOfDay = "Week Day🥲";
+//     }
+        console.log("Day is "+ getDay());
+        // console.log("you have landed on the home page."+items);
+        const items = await task.find();
+        // console.log(items);
+        // cur.forEach((task)=>{
+        //         items.push(task.task);
+        //         console.log(task.task);
+        // });
+        res.render("list" , {day: getDay() , items:items});
+});
+
+app.post("/delete" , async(req , res)=>{
+        const itemId = req.body.checkBox;
+        const deleteItem = await task.deleteOne({_id:itemId});
+        res.redirect('/home');
 });
 
 app.listen(3000 , ()=>{
     console.log("App is currently listening in port 3000....");
 }) ;
+

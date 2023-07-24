@@ -8,15 +8,18 @@
             </h1>
         </div>
         <div class="box">
-            <% for(var i=0;i<items.length;i++){%>
-            <div class="item">
-                <input type="checkbox">
-                <p>
-                    <%= items[i] %>
-                </p>
-            </div>
-            <% } %>
-            <form class="item" action="/" method="post">
+            <%items.forEach(item=> { %>
+                <form action="/delete" method="post">
+                    <div class="item">
+                        <input type="checkbox" name="checkBox" value="<%= item._id %>" onchange="this.form.submit()">
+                        <p>
+                        <%= item.task %>
+                            </p>
+                            </div>
+                    </form>
+                    
+                    <%}); %>
+                        <form class="item" action="/add" method="post">
                 <input type="text" name="task" placeholder="New Task" autocomplete="off">
                 <button type="submit">+</button>
             </form>
