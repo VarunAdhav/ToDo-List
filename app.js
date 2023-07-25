@@ -9,7 +9,7 @@ app.use(express.static("public"));
 
 
 
-mongoose.connect("mongodb://127.0.0.1:27017/todoListDB").then(()=>{
+mongoose.connect("mongodb+srv://varunDev:Zgw79eOBFOMCzjjj@cluster0.ef3jysx.mongodb.net/").then(()=>{
         console.log("Connected to MongoDB");
 })
 
@@ -21,7 +21,6 @@ const taskSchema = new mongoose.Schema({
 });
 
 let task = new mongoose.model("tasks" , taskSchema , "tasks");
-
 
 
 let items = [];
@@ -62,7 +61,7 @@ function getDay(){
 
 app.post("/add" , (req , res)=>{
         const newItem = req.body.task;
-        
+
         const newTask = new task({
                 task : newItem
         })
@@ -91,7 +90,7 @@ app.get("/home" , async(req , res)=>{
         //         items.push(task.task);
         //         console.log(task.task);
         // });
-        res.render("list" , {day: getDay() , items:items});
+        res.render( "list" , {day: getDay() , items:items} );
 });
 
 app.post("/delete" , async(req , res)=>{

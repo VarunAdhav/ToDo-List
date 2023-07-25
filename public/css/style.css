@@ -57,6 +57,11 @@ form.item {
     margin-left: 20px;
 }
 
+input[type="date"] {
+    text-align: center;
+    margin: 20px;
+    width: 50%;
+}
 button {
     min-height: 50px;
     width: 50px;
